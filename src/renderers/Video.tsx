@@ -24,13 +24,13 @@ export const renderer: Renderer = ({
 
   React.useEffect(() => {
     if (vid.current) {
-      if (isPaused) {
+      if (isPaused || story.isStoryPause) {
         vid.current.pause();
       } else {
         vid.current.play().catch(() => {});
       }
     }
-  }, [isPaused]);
+  }, [isPaused, story.isStoryPause]);
 
   const onWaiting = () => {
     action("pause", true);
@@ -43,17 +43,21 @@ export const renderer: Renderer = ({
   const videoLoaded = () => {
     messageHandler("UPDATE_VIDEO_DURATION", { duration: vid.current.duration });
     setLoaded(true);
-    vid.current
-      .play()
-      .then(() => {
-        action("play");
-      })
-      .catch(() => {
-        setMuted(true);
-        vid.current.play().finally(() => {
+    if (story.isStoryPause) {
+      vid.current.pause();
+    } else {
+      vid.current
+        .play()
+        .then(() => {
           action("play");
+        })
+        .catch(() => {
+          setMuted(true);
+          vid.current.play().finally(() => {
+            action("play");
+          });
         });
-      });
+    }
   };
 
   return (

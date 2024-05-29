@@ -3,7 +3,7 @@ import { Renderer, Tester } from "./../interfaces";
 
 export const renderer: Renderer = ({ story, action }) => {
   React.useEffect(() => {
-    action("pause");
+    action("play");
   }, [story]);
 
   return (

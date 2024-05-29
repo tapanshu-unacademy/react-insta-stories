@@ -259,6 +259,7 @@ const stories2 = [
         </div>
       );
     },
+    isStoryPause:true,
   },
   {
     content: ({ action, story }) => {
@@ -296,9 +297,11 @@ const stories2 = [
       </div>
     ),
     duration: 5000,
+  
   },
   {
     url: "https://picsum.photos/1080/1920",
+    isStoryPause:true,
     seeMore: ({ close }) => (
       <div
         style={{

@@ -3,7 +3,7 @@ import { Renderer, Tester } from './../interfaces';
 
 export const renderer: Renderer = (props) => {
     React.useEffect(() => {
-        props.action('play');
+        // props.action('play');
     }, [props.story])
     const Content = props.story.originalContent;
     return <Content {...props} />

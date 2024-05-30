@@ -259,7 +259,7 @@ const stories2 = [
         </div>
       );
     },
-    isStoryPause:true,
+    isStoryPause:false,
   },
   {
     content: ({ action, story }) => {
@@ -322,6 +322,7 @@ const stories2 = [
     url:
       "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
     type: "video",
+    isStoryPause:true,
   },
   {
     content: Story2,

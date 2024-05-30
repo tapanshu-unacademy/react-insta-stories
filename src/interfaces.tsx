@@ -121,7 +121,7 @@ export interface Story {
   // Whether to preload the resource or not, defaults to `true` for images and `false` for videos (video preloading is experimental)
   preloadResource?: boolean;
   muted?: boolean;
-  isStoryPause:boolean
+  isStoryPause?:boolean
 }
 
 export interface Header {

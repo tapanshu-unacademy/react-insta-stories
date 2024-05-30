@@ -301,7 +301,7 @@ const stories2 = [
   },
   {
     url: "https://picsum.photos/1080/1920",
-    isStoryPause:true,
+    isStoryPause:false,
     seeMore: ({ close }) => (
       <div
         style={{

@@ -15,6 +15,7 @@ export const renderer: Renderer = ({
   const [muted, setMuted] = React.useState(story.muted || false);
   const { width, height, loader, storyStyles } = config;
 
+
   let computedStyles = {
     ...styles.storyContent,
     ...(storyStyles || {}),
@@ -22,16 +23,30 @@ export const renderer: Renderer = ({
 
   let vid = React.useRef<HTMLVideoElement>(null);
 
-  React.useEffect(() => {
-    if (vid.current) {
-      if (isPaused || story.isStoryPause) {
-        vid.current.pause();
-      } else {
-        vid.current.play().catch(() => {});
-      }
-    }
-  }, [isPaused, story.isStoryPause]);
 
+
+  React.useEffect(() => {
+   
+    if (vid.current) {
+      if (isPaused || story?.isStoryPause) {
+        vid.current.pause();
+        action("pause", true); 
+      } 
+      else {
+          vid.current.play().then(()=>{
+          }).catch(() => {});
+        }
+      
+    }
+  }, [isPaused]);
+
+//   React.useEffect(()=>{
+//     if(story?.isStoryPause)
+//       {
+//  action("pause", true);
+//       }
+//   },[vid.current])
+  
   const onWaiting = () => {
     action("pause", true);
   };
@@ -43,21 +58,17 @@ export const renderer: Renderer = ({
   const videoLoaded = () => {
     messageHandler("UPDATE_VIDEO_DURATION", { duration: vid.current.duration });
     setLoaded(true);
-    if (story.isStoryPause) {
-      vid.current.pause();
-    } else {
-      vid.current
-        .play()
-        .then(() => {
+    vid.current
+      .play()
+      .then(() => {
+        action("play");
+      })
+      .catch(() => {
+        setMuted(true);
+        vid.current.play().finally(() => {
           action("play");
-        })
-        .catch(() => {
-          setMuted(true);
-          vid.current.play().finally(() => {
-            action("play");
-          });
         });
-    }
+      });
   };
 
   return (
@@ -74,7 +85,7 @@ export const renderer: Renderer = ({
             onWaiting={onWaiting}
             onPlaying={onPlaying}
             muted={muted}
-            autoPlay
+            // autoPlay
             webkit-playsinline="true"
           />
           {!loaded && (
